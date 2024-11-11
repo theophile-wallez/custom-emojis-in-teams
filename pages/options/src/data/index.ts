@@ -1,1 +1,1 @@
-export { allEmojis, type EmojiKey } from './emojis';
+export { allEmojis } from './emojis';
