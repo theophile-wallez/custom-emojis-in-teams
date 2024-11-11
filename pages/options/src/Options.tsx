@@ -1,9 +1,9 @@
-import '@src/Options.css';
+import { useState } from 'react';
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import { exampleThemeStorage } from '@extension/storage';
-import type { Emoji } from './data/emojis';
+import '@src/Options.css';
 import { allEmojis } from './data/emojis';
-import { useState } from 'react';
+import type { Emoji } from './data/emojis/emojis.type';
 
 const Options = () => {
   const theme = useStorage(exampleThemeStorage);
