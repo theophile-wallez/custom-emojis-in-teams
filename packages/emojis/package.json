@@ -1,14 +1,14 @@
 {
-  "name": "@extension/storage",
+  "name": "@extension/emojis",
   "version": "0.3.3",
-  "description": "chrome extension - storage",
+  "description": "chrome extension - emojis code",
   "private": true,
   "sideEffects": false,
   "files": [
     "dist/**"
   ],
-  "main": "./dist/index.js",
   "types": "index.ts",
+  "main": "./dist/index.js",
   "scripts": {
     "clean:bundle": "rimraf dist",
     "clean:node_modules": "pnpx rimraf node_modules",
@@ -21,7 +21,9 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@extension/tsconfig": "workspace:*",
-    "@extension/emojis": "workspace:*"
+    "@extension/tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
   }
 }
