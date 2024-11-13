@@ -12,6 +12,7 @@ export function useStorage<
   const _data = useSyncExternalStore<Data | null>(storage.subscribe, storage.getSnapshot);
 
   if (!storageMap.has(storage)) {
+    console.log('no storage: ', storage);
     storageMap.set(storage, wrapPromise(storage.get()));
   }
   if (_data !== null) {

@@ -1,5 +1,5 @@
 import { z } from 'zod';
 import { EmojiIdSchema } from './emoji.id.schema';
 
-export const customEmojisStorageSchema = z.record(EmojiIdSchema, z.string().url());
-export type CustomEmojisStorageMap = z.infer<typeof customEmojisStorageSchema>;
+export const customEmojisSchema = z.record(EmojiIdSchema, z.string().url());
+export type CustomEmojisMap = z.infer<typeof customEmojisSchema>;

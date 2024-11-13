@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import type { CustomEmojisStorageMap } from '@extension/emojis';
+// import type { CustomEmojisStorageMap } from '@extension/emojis';
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
-import { exampleThemeStorage } from '@extension/storage';
+import { customEmojiStorage, exampleThemeStorage } from '@extension/storage';
 import '@src/Options.css';
 import { allEmojis } from './data/emojis';
 import type { Emoji } from './data/emojis/emojis.type';
@@ -9,6 +9,8 @@ import { ImportMap } from './components/importMap';
 
 const Options = () => {
   const theme = useStorage(exampleThemeStorage);
+  const customEmojis = useStorage(customEmojiStorage);
+  console.log('customEmojis: ', customEmojis);
   const isLight = theme === 'light';
   const [filteredEmojis, setFilteredEmojis] = useState<Emoji[]>(allEmojis);
 
@@ -17,8 +19,6 @@ const Options = () => {
     const filteredEmojis = allEmojis.filter(emoji => emoji.id.includes(search.toLowerCase()));
     setFilteredEmojis(filteredEmojis);
   };
-
-  const a: CustomEmojisStorageMap = {};
 
   return (
     <div className={`App ${isLight ? 'bg-slate-50 text-gray-900' : 'bg-gray-800 text-gray-100'}`}>
