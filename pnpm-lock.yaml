@@ -102,6 +102,9 @@ importers:
 
   chrome-extension:
     dependencies:
+      '@extension/emojis':
+        specifier: workspace:*
+        version: link:../packages/emojis
       '@extension/shared':
         specifier: workspace:*
         version: link:../packages/shared

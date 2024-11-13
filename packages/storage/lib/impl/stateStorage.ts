@@ -1,46 +1,59 @@
 import { StorageEnum } from '../base/enums';
 import { createStorage } from '../base/base';
 
-type StateData = {
+export type StateData = {
   updateTimeDelta: 6;
-} & Partial<{ lastUpdate: Date; sourceUrl: string }> &
+} & Partial<{ lastUpdate: number; sourceUrl: string; token: string }> &
   (
     | {
         source: 'manual';
       }
     | {
         source: 'link';
-        lastUpdate: Date;
+        lastUpdate: number;
       }
   );
+
 const DEFAULT_UPDATE_TIME_DELTA = 6 as const;
 const DEFAULT_SETTINGS: StateData = {
   source: 'link',
-  lastUpdate: new Date(),
+  lastUpdate: Date.now(),
   updateTimeDelta: DEFAULT_UPDATE_TIME_DELTA,
 } as const satisfies StateData;
 
-const inititalSettingsStorage = createStorage<StateData>('custom-emoji-storage', DEFAULT_SETTINGS, {
+const initialStateStorage = createStorage<StateData>('state-storage', DEFAULT_SETTINGS, {
   storageEnum: StorageEnum.Local,
   liveUpdate: true,
 });
 
-export const settingsStorage = {
-  ...inititalSettingsStorage,
+export const stateStorage = {
+  ...initialStateStorage,
   toggleSource: async () => {
-    const data = await settingsStorage.get();
+    const data = await stateStorage.get();
 
     if (data.source === 'manual') {
-      await settingsStorage.set(data => ({
-        lastUpdate: new Date(),
+      await stateStorage.set(data => ({
+        lastUpdate: Date.now(),
         ...data,
         source: 'link',
       }));
     } else {
-      await settingsStorage.set(data => ({
+      await stateStorage.set(data => ({
         ...data,
         source: 'manual',
       }));
     }
+  },
+
+  setProperty: async (property: keyof StateData, value: StateData[keyof StateData]) => {
+    await stateStorage.set(data => ({
+      ...data,
+      [property]: value,
+    }));
+  },
+
+  getProperty: async <K extends keyof StateData>(key: K) => {
+    const state = await stateStorage.get();
+    return state[key] as StateData[K];
   },
 };
