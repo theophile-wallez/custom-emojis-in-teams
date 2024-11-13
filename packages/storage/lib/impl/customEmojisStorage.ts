@@ -37,9 +37,12 @@ const newCustomEmojiStorage = createStorage<CustomEmojisMap>('custom-emoji-stora
   liveUpdate: true,
 });
 
-export const customEmojiStorage: CustomEmojiStorage = {
+export const customEmojiStorage = {
   ...newCustomEmojiStorage,
-  // reset: async () => {
-  //   return await newCustomEmojiStorage.set({});
-  // },
+  reset: async () => {
+    return await newCustomEmojiStorage.set({});
+  },
+  merge: async (data: CustomEmojisMap) => {
+    return await newCustomEmojiStorage.set(currentData => ({ ...currentData, ...data }));
+  },
 };
