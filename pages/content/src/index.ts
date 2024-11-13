@@ -1,12 +1,13 @@
 import { toggleTheme } from '@src/toggleTheme';
+import { getCustomEmojisStorage } from '@src/getCustomEmojisStorage';
 import { findEmojis } from './findEmojis';
 
 console.log('content script loaded');
 
 // Function to count divs and observe DOM changes
-function initObserver() {
+async function initObserver(emojisMap: Record<string, string>) {
   const bodyObserver = new MutationObserver(() => {
-    findEmojis();
+    findEmojis(emojisMap);
   });
 
   // Start observing the document with configured parameters
@@ -15,7 +16,9 @@ function initObserver() {
     subtree: true,
   });
 }
-
-initObserver();
+getCustomEmojisStorage().then(res => {
+  console.log('res: ', res);
+  void initObserver(res);
+});
 
 void toggleTheme();
