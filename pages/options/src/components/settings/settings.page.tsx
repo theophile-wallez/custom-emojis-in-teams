@@ -6,9 +6,7 @@ import { SettingsForm } from './settings.form';
 
 export const SettingsPage = () => {
   const settings = useStorage(settingsStorage);
-  console.log('settings: ', settings);
   const onChange = (value: SettingsData) => {
-    console.log('onChange SettingsPage: ', value);
     settingsStorage.set(value);
   };
 
@@ -17,7 +15,7 @@ export const SettingsPage = () => {
       <Card className="w-full">
         <CardHeader>
           <CardTitle>Settings</CardTitle>
-          <CardDescription>Card Description</CardDescription>
+          <CardDescription>The custom emojis mapping settings.</CardDescription>
         </CardHeader>
         <CardContent>
           <SettingsForm settings={settings} onSettingsChange={onChange} />
