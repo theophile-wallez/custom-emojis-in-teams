@@ -1,3 +1,3 @@
 export * from './exampleThemeStorage';
 export * from './customEmojisStorage';
-export * from './stateStorage';
+export * from './settings';

@@ -5,4 +5,4 @@ export default {
     extend: {},
   },
   plugins: [],
-} as Omit<Config, 'content'>;
+} satisfies Omit<Config, 'content'>;

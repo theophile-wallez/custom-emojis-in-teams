@@ -1,33 +1,27 @@
 import 'webextension-polyfill';
 import { Time } from './types';
 import { handleEmojisFetch } from './handleEmojisFetch';
-import { ALARM_NAME } from './constants';
 import { isAlarmDefined, createNewAlarm } from './utils/alarms';
 
 const isFirefox = false;
 
 /**
  * Every hour, the background script will check if it is time to fetch.
- * If the alarm is not defined, it will create a new one.
+ * Chrome uses the alarm API to trigger the fetch while Firefox uses setInterval.
  */
-const init = async () => {
+const initiate = async () => {
   if (isFirefox) {
-    console.log('isFirefox: ', isFirefox);
     setInterval(async () => {
       await handleEmojisFetch();
     }, 1 * Time.Hour);
   } else {
-    if (!(await isAlarmDefined())) {
-      console.log('createNewAlarm');
-      createNewAlarm();
-    }
+    const isAlarmSet = await isAlarmDefined();
+    if (!isAlarmSet) await createNewAlarm();
 
     chrome.alarms.onAlarm.addListener(async alarm => {
-      console.log('alarm: ', alarm);
-      if (alarm.name !== ALARM_NAME) return;
-      await handleEmojisFetch();
+      await handleEmojisFetch(alarm);
     });
   }
 };
 
-void init();
+void initiate();
