@@ -1,35 +1,33 @@
 import 'webextension-polyfill';
-import { stateStorage, customEmojiStorage } from '@extension/storage';
-import { fetchEmojis } from '@extension/emojis/lib/utils/fetchEmojis';
+import { Time } from './types';
+import { handleEmojisFetch } from './handleEmojisFetch';
+import { ALARM_NAME } from './constants';
+import { isAlarmDefined, createNewAlarm } from './utils/alarms';
 
-enum Time {
-  Second = 1000,
-  Minute = 60 * Second,
-  Hour = 60 * Minute,
-}
+const isFirefox = false;
 
-setInterval(async () => {
-  const state = await stateStorage.get();
+/**
+ * Every hour, the background script will check if it is time to fetch.
+ * If the alarm is not defined, it will create a new one.
+ */
+const init = async () => {
+  if (isFirefox) {
+    console.log('isFirefox: ', isFirefox);
+    setInterval(async () => {
+      await handleEmojisFetch();
+    }, 1 * Time.Hour);
+  } else {
+    if (!(await isAlarmDefined())) {
+      console.log('createNewAlarm');
+      createNewAlarm();
+    }
 
-  if (state.source !== 'link' || !state.sourceUrl) return;
-  if (!isTimeToFetch(state.lastUpdate, state.updateTimeDelta)) return;
-
-  await fetchDataAndStore(state.sourceUrl, state.token ?? process.env.VITE_GITHUB_TOKEN);
-}, 1 * Time.Hour);
-
-const isTimeToFetch = (lastUpdate: number, updateInterval: number) => {
-  return Date.now() - lastUpdate >= updateInterval * Time.Hour;
+    chrome.alarms.onAlarm.addListener(async alarm => {
+      console.log('alarm: ', alarm);
+      if (alarm.name !== ALARM_NAME) return;
+      await handleEmojisFetch();
+    });
+  }
 };
 
-const updateLastUpdate = async () => {
-  await stateStorage.setProperty('lastUpdate', Date.now());
-};
-
-const fetchDataAndStore = async (sourceUrl: string, token?: string) => {
-  const response = await fetchEmojis(sourceUrl, token);
-
-  if (response instanceof Error) return;
-
-  await customEmojiStorage.merge(response);
-  await updateLastUpdate();
-};
+void init();
