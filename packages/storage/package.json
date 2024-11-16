@@ -20,8 +20,11 @@
     "prettier": "prettier . --write --ignore-path ../../.prettierignore",
     "type-check": "tsc --noEmit"
   },
+  "dependencies": {
+    "@extension/emojis": "workspace:*",
+    "zod": "^3.23.8"
+  },
   "devDependencies": {
-    "@extension/tsconfig": "workspace:*",
-    "@extension/emojis": "workspace:*"
+    "@extension/tsconfig": "workspace:*"
   }
 }

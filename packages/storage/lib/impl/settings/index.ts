@@ -1,7 +1,10 @@
+import type { z } from 'zod';
 import { StorageEnum } from '../../base/enums';
 import { createStorage } from '../../base/base';
-import type { SettingsData } from './settings.types';
 import { DEFAULT_SETTINGS } from './settings.defaults';
+import type { settingsSchema } from '../../schemas/settings.schema';
+
+export type SettingsData = z.infer<typeof settingsSchema>;
 
 const rawSettingsStorage = createStorage<SettingsData>('settings-storage', DEFAULT_SETTINGS, {
   storageEnum: StorageEnum.Local,
