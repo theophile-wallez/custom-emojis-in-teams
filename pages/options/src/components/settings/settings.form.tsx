@@ -19,6 +19,7 @@ export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
   });
 
   function onSubmit(values: SettingsData) {
+    console.log('values: ', values);
     console.log(values);
     onSettingsChange(values);
   }
@@ -39,7 +40,7 @@ export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
                     checked={field.value === 'manualFirst'}
                     onCheckedChange={v => field.onChange(v ? 'manualFirst' : 'sourceFirst')}
                   />
-                  <Label htmlFor="merge-mode">Manual first</Label>
+                  <Label htmlFor="merge-mode">Manual mapping first</Label>
                 </div>
               </FormControl>
               <FormDescription>
@@ -99,7 +100,7 @@ export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
                     <a className="underline hover:text-black" href="https://github.com/settings/tokens?type=beta">
                       Personal Access Token
                     </a>{' '}
-                    with read access.
+                    with read access permission.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -112,7 +113,7 @@ export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
                 <FormItem>
                   <FormLabel>Update interval in hours</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ex: 6 hours" {...field} type="number" />
+                    <Input placeholder="Ex: 6 hours" {...field} type="number" min={1} max={24} step={1} />
                   </FormControl>
                   <FormDescription>The mapping will be updated every {field.value} hours.</FormDescription>
                   <FormMessage />
