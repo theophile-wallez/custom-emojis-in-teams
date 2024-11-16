@@ -7,27 +7,22 @@ import { settingsSchema, type SettingsData } from '@extension/storage';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
+
 type Props = {
   settings: SettingsData;
   onSettingsChange: (value: SettingsData) => void;
 };
 
 export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
-  const form = useForm<SettingsData>({
+  const form = useForm({
     resolver: zodResolver(settingsSchema),
     values: settings,
   });
 
-  function onSubmit(values: SettingsData) {
-    console.log('values: ', values);
-    console.log(values);
-    onSettingsChange(values);
-  }
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
+      <form onSubmit={form.handleSubmit(onSettingsChange)} className="space-y-8">
+        {/* <FormField
           control={form.control}
           name="mergeMode"
           render={({ field }) => (
@@ -50,7 +45,7 @@ export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
             </FormItem>
           )}
         />
-        <Separator />
+        <Separator /> */}
         <FormField
           control={form.control}
           name="isSync"

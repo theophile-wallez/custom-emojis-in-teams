@@ -3,8 +3,10 @@ import { customEmojisSchema, type CustomEmojisMap } from '../schemas/customEmoji
 export const fetchEmojis = async (url: string, token?: string): Promise<CustomEmojisMap | Error> => {
   try {
     const headers: HeadersInit = {
-      ...(token ? { Authorization: `Token ${token}` } : {}),
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `token ${token}` } : {}),
     };
+
     const response = await fetch(url, {
       cache: 'no-cache',
       method: 'GET',

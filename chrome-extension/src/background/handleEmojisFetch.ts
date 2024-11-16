@@ -15,6 +15,7 @@ export const handleEmojisFetch = async (alarm?: chrome.alarms.Alarm) => {
 };
 
 const isTimeToFetch = (lastUpdate: number, updateInterval: number) => {
+  console.log('isTimeToFetch', Date.now() - lastUpdate >= updateInterval * Time.Hour);
   return Date.now() - lastUpdate >= updateInterval * Time.Hour;
 };
 
@@ -25,7 +26,10 @@ const updateLastUpdate = async () => {
 const fetchDataAndStore = async (sourceUrl: string, token?: string) => {
   const response = await fetchEmojis(sourceUrl, token);
 
-  if (response instanceof Error) return; // TODO: Store and display error
+  if (response instanceof Error) {
+    console.error('Error fetching emojis: ', response.message);
+    return;
+  } // TODO: Store and display error
 
   await customEmojiStorage.merge(response);
   await updateLastUpdate();
