@@ -1,14 +1,16 @@
 import 'webextension-polyfill';
-import { stateStorage, customEmojiStorage } from '@extension/storage';
+import { settingsStorage, customEmojiStorage } from '@extension/storage';
 import { fetchEmojis } from '@extension/emojis/lib/utils/fetchEmojis';
 import { Time } from './types';
+import { ALARM_NAME } from './constants';
 
-export const handleEmojisFetch = async () => {
-  const state = await stateStorage.get();
+export const handleEmojisFetch = async (alarm?: chrome.alarms.Alarm) => {
+  if (alarm && alarm.name !== ALARM_NAME) return;
 
-  if (state.source !== 'link' || !state.sourceUrl) return;
+  const state = await settingsStorage.get();
+
+  if (state.isSync === false || !state.sourceUrl) return;
   if (!isTimeToFetch(state.lastUpdate, state.updateTimeDelta)) return;
-  // ?? process.env.VITE_GITHUB_TOKEN
   await fetchDataAndStore(state.sourceUrl, state.token);
 };
 
@@ -17,13 +19,13 @@ const isTimeToFetch = (lastUpdate: number, updateInterval: number) => {
 };
 
 const updateLastUpdate = async () => {
-  await stateStorage.setProperty('lastUpdate', Date.now());
+  await settingsStorage.setProperty('lastUpdate', Date.now());
 };
 
 const fetchDataAndStore = async (sourceUrl: string, token?: string) => {
   const response = await fetchEmojis(sourceUrl, token);
 
-  if (response instanceof Error) return;
+  if (response instanceof Error) return; // TODO: Store and display error
 
   await customEmojiStorage.merge(response);
   await updateLastUpdate();

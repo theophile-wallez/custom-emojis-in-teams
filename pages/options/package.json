@@ -19,10 +19,10 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@extension/emojis": "workspace:*",
     "@extension/shared": "workspace:*",
     "@extension/storage": "workspace:*",
     "@extension/ui": "workspace:*",
-    "@extension/emojis": "workspace:*",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.456.0",
