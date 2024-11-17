@@ -95,7 +95,7 @@ export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
                     <a className="underline hover:text-black" href="https://github.com/settings/tokens?type=beta">
                       Personal Access Token
                     </a>{' '}
-                    with read access permission.
+                    with read access to code and metadata.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

@@ -5,17 +5,17 @@ import { type CustomEmojisMap } from '@extension/emojis';
 
 const DEFAULT_STORAGE = {} as const satisfies CustomEmojisMap;
 
-const newCustomEmojiStorage = createStorage<CustomEmojisMap>('custom-emoji-storage', DEFAULT_STORAGE, {
+const newExternalMappingStorage = createStorage<CustomEmojisMap>('custom-emoji-storage', DEFAULT_STORAGE, {
   storageEnum: StorageEnum.Local,
   liveUpdate: true,
 });
 
-export const customEmojiStorage = {
-  ...newCustomEmojiStorage,
+export const externalMappingStorage = {
+  ...newExternalMappingStorage,
   reset: async () => {
-    return await newCustomEmojiStorage.set({});
+    return await newExternalMappingStorage.set({});
   },
   merge: async (data: CustomEmojisMap) => {
-    return await newCustomEmojiStorage.set(currentData => ({ ...currentData, ...data }));
+    return await newExternalMappingStorage.set(currentData => ({ ...currentData, ...data }));
   },
 };

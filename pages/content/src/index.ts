@@ -1,6 +1,6 @@
 import { toggleTheme } from '@src/toggleTheme';
-import { getCustomEmojisStorage } from '@src/getCustomEmojisStorage';
 import { findEmojis } from './findEmojis';
+import { getMappingStorage } from '@extension/storage';
 
 console.log('content script loaded');
 
@@ -16,9 +16,13 @@ async function initObserver(emojisMap: Record<string, string>) {
     subtree: true,
   });
 }
-getCustomEmojisStorage().then(res => {
-  console.log('res: ', res);
-  void initObserver(res);
+getMappingStorage().then(response => {
+  void initObserver(response);
+});
+
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  console.log('changes: ', changes);
+  console.log('namespace: ', namespace);
 });
 
 void toggleTheme();

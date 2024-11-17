@@ -11,16 +11,14 @@ export const SettingsPage = () => {
   };
 
   return (
-    <section className="flex w-2/3 flex-col items-center gap-4 ">
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Settings</CardTitle>
-          <CardDescription>The custom emojis mapping settings.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <SettingsForm settings={settings} onSettingsChange={onChange} />
-        </CardContent>
-      </Card>
-    </section>
+    <Card className="w-full">
+      <CardHeader>
+        <CardTitle>Settings</CardTitle>
+        <CardDescription>The custom emojis mapping settings.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <SettingsForm settings={settings} onSettingsChange={onChange} />
+      </CardContent>
+    </Card>
   );
 };

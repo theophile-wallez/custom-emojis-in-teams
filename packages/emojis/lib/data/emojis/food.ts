@@ -674,6 +674,5 @@ export const food = [
   {
     id: 'oreo',
     src: 'https://statics.teams.cdn.office.net/evergreen-assets/personal-expressions/v2/assets/emoticons/oreo/default/60_anim_f.png?v=v7',
-    alt: '(oreo)',
   },
 ] as const satisfies EmojiShape[];
