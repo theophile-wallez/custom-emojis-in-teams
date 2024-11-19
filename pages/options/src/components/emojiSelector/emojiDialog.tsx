@@ -21,10 +21,7 @@ export const EmojiDialog = () => {
       <DialogContent className="m-4 h-[calc(100%-6rem)] overflow-hidden">
         <DialogHeader>
           <DialogTitle>Select an emoji</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your account and remove your data from our
-            servers.
-          </DialogDescription>
+          <DialogDescription>Pick an emoji and assign a custom emoji url to it.</DialogDescription>
         </DialogHeader>
         <EmojiSelector />
       </DialogContent>

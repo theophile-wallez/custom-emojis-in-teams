@@ -5,7 +5,7 @@ import { type CustomEmojisMap } from '@extension/emojis';
 
 const DEFAULT_STORAGE = {} as const satisfies CustomEmojisMap;
 
-const newExternalMappingStorage = createStorage<CustomEmojisMap>('custom-emoji-storage', DEFAULT_STORAGE, {
+const newExternalMappingStorage = createStorage<CustomEmojisMap>('external-mapping-storage', DEFAULT_STORAGE, {
   storageEnum: StorageEnum.Local,
   liveUpdate: true,
 });

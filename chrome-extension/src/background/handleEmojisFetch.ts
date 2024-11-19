@@ -1,5 +1,5 @@
 import 'webextension-polyfill';
-import { settingsStorage, customEmojiStorage } from '@extension/storage';
+import { settingsStorage, externalMappingStorage } from '@extension/storage';
 import { fetchEmojis } from '@extension/emojis/lib/utils/fetchEmojis';
 import { Time } from './types';
 import { ALARM_NAME } from './constants';
@@ -10,12 +10,11 @@ export const handleEmojisFetch = async (alarm?: chrome.alarms.Alarm) => {
   const state = await settingsStorage.get();
 
   if (state.isSync === false || !state.sourceUrl) return;
-  if (!isTimeToFetch(state.lastUpdate, state.updateTimeDelta)) return;
+  // if (!isTimeToFetch(state.lastUpdate, state.updateTimeDelta)) return;
   await fetchDataAndStore(state.sourceUrl, state.token);
 };
 
 const isTimeToFetch = (lastUpdate: number, updateInterval: number) => {
-  console.log('isTimeToFetch', Date.now() - lastUpdate >= updateInterval * Time.Hour);
   return Date.now() - lastUpdate >= updateInterval * Time.Hour;
 };
 
@@ -28,9 +27,11 @@ const fetchDataAndStore = async (sourceUrl: string, token?: string) => {
 
   if (response instanceof Error) {
     console.error('Error fetching emojis: ', response.message);
-    return;
-  } // TODO: Store and display error
+    return; // TODO: Store and display error
+  }
 
-  await customEmojiStorage.merge(response);
   await updateLastUpdate();
+
+  if (Object.keys(response).length === 0) return;
+  await externalMappingStorage.set(response);
 };
