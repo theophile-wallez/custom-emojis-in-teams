@@ -1,6 +1,6 @@
 {
   "name": "@extension/emojis",
-  "version": "0.3.3",
+  "version": "0.0.1",
   "description": "chrome extension - emojis code",
   "private": true,
   "sideEffects": false,
