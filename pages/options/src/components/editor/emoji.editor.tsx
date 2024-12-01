@@ -19,7 +19,7 @@ export const EmojiEditor = ({ emoji, children, onChange }: Props) => {
   const form = useForm<CustomEmojiSrc>({
     resolver: zodResolver(customSrcSchema),
     values: {
-      customEmojiSrc: emoji.customEmojiSrc ?? ''
+      customEmojiSrc: emoji.provider === 'user' ? emoji.customEmojiSrc! : ''
     }
   });
 
@@ -62,7 +62,10 @@ export const EmojiEditor = ({ emoji, children, onChange }: Props) => {
                     <FormItem>
                       <FormLabel>Custom emoji url</FormLabel>
                       <FormControl>
-                        <Input placeholder="https://..." {...field} />
+                        <Input
+                          placeholder={emoji.provider === 'user' ? 'https://' : (emoji.customEmojiSrc ?? 'https://...')}
+                          {...field}
+                        />
                       </FormControl>
                       <FormDescription>The URL to the emoji image.</FormDescription>
                       <FormMessage />
@@ -70,7 +73,9 @@ export const EmojiEditor = ({ emoji, children, onChange }: Props) => {
                   )}
                 />
                 <div className="flex justify-between">
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit" disabled={!form.formState.isValid}>
+                    {emoji.customEmojiSrc ? 'Update' : 'Add'}
+                  </Button>
                   {emoji.customEmojiSrc && emoji.provider === 'user' && (
                     <Button type="reset" onClick={onDelete} variant="destructive">
                       Delete

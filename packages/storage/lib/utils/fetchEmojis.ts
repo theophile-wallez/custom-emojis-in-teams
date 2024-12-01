@@ -1,16 +1,17 @@
-import { customEmojisStoreSchema, type CustomEmojisStoreMap } from '../schemas/customEmojis.storage.schema';
+import type { CustomEmojisStoreMap } from '@extension/emojis';
+import { customEmojisStoreSchema } from '@extension/emojis';
 
 export const fetchEmojis = async (url: string, token?: string): Promise<CustomEmojisStoreMap | Error> => {
   try {
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
-      ...(token ? { Authorization: `token ${token}` } : {}),
+      ...(token ? { Authorization: `token ${token}` } : {})
     };
 
     const response = await fetch(url, {
       cache: 'no-cache',
       method: 'GET',
-      headers: headers,
+      headers: headers
     });
 
     const data: unknown = await response.json();

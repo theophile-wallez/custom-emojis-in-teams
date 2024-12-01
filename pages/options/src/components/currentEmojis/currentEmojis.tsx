@@ -4,7 +4,7 @@ import { AddEmoji } from '@src/components/addEmojis/addEmoji';
 import { useState } from 'react';
 import { useCustomEmojis } from '@src/hook/useCustomEmojis';
 
-export const Mapping = () => {
+export const CurrentEmojis = () => {
   const [currentEmojis, setCurrentEmojis] = useState<CustomEmojiShape[] | undefined>();
   const allCustomEmojis = useCustomEmojis(currentEmojis);
 

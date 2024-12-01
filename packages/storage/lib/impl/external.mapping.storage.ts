@@ -1,18 +1,14 @@
 import { StorageEnum } from '../base/enums';
 import { createStorage } from '../base/base';
 
-import type {
-  CustomEmojiMapWithProvider,
-  EmojiId,
-  CustomEmojisStoreMap,
-  customEmojisStoreSchema,
-} from '@extension/emojis';
+import type { CustomEmojisStoreMap, CustomEmojiMapWithProvider, EmojiId } from '@extension/emojis';
+import { customEmojisStoreSchema } from '@extension/emojis';
 
 const DEFAULT_STORAGE = {} as const satisfies CustomEmojisStoreMap;
 
 const newExternalMappingStorage = createStorage<CustomEmojisStoreMap>('external-mapping-storage', DEFAULT_STORAGE, {
   storageEnum: StorageEnum.Local,
-  liveUpdate: true,
+  liveUpdate: true
 });
 
 export const externalMappingStorage = {
@@ -55,5 +51,5 @@ export const externalMappingStorage = {
       return response.data;
     }
     return undefined;
-  },
+  }
 };

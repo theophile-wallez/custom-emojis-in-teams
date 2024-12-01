@@ -5,14 +5,14 @@ import {
   type CustomEmojiMapWithProvider,
   customEmojisStoreSchema,
   type EmojiId,
-  type CustomEmojisStoreMap,
+  type CustomEmojisStoreMap
 } from '@extension/emojis';
 
 const DEFAULT_STORAGE = {} as const satisfies CustomEmojisStoreMap;
 
 const newUserMappingStorage = createStorage<CustomEmojisStoreMap>('user-mapping-storage', DEFAULT_STORAGE, {
   storageEnum: StorageEnum.Local,
-  liveUpdate: true,
+  liveUpdate: true
 });
 
 export const userMappingStorage = {
@@ -34,6 +34,12 @@ export const userMappingStorage = {
       delete newData[id as EmojiId];
       console.log('newData: ', newData);
       return newData;
+    });
+  },
+  removeByIds: async (ids: string[]) => {
+    return await newUserMappingStorage.set(currentData => {
+      ids.forEach(id => delete currentData[id as EmojiId]);
+      return currentData;
     });
   },
   getById: async (id: string) => {
@@ -58,5 +64,5 @@ export const userMappingStorage = {
       return response.data;
     }
     return undefined;
-  },
+  }
 };

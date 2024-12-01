@@ -1,16 +1,16 @@
-import { findEmojis } from './findEmojis';
+import { findAndReplaceEmojis } from './findEmojis';
 import { getMappingStorage } from '@extension/storage';
 
-console.log('content script loaded');
+console.log('Custom emojisloaded');
 
 async function initObserver(emojisMap: Record<string, string>) {
   const bodyObserver = new MutationObserver(() => {
-    findEmojis(emojisMap);
+    findAndReplaceEmojis(emojisMap);
   });
 
   bodyObserver.observe(document.body, {
     childList: true,
-    subtree: true,
+    subtree: true
   });
 }
 

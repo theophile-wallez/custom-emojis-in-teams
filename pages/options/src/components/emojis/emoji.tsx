@@ -7,7 +7,9 @@ type Props = {
 export const Emoji = ({ emoji }: Props) => {
   return (
     <EmojiContainer>
-      <p className="text-center text-[1.4rem]">{emoji?.alt}</p>
+      <p title={emoji.id} className="text-center text-[1.4rem]">
+        {emoji?.alt}
+      </p>
     </EmojiContainer>
   );
 };

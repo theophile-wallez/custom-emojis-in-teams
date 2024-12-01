@@ -12,12 +12,14 @@ type Props = {
 export const EmojiFromTo = ({ emoji, onChange }: Props) => {
   return (
     <EmojiEditor emoji={emoji} onChange={onChange}>
-      <div className="relative flex h-10 w-[105px] shrink-0 grow-0 cursor-pointer select-none items-center gap-1 rounded-md border hover:bg-gray-100">
+      <div
+        title={emoji.id}
+        className="relative flex h-10 w-[105px] shrink-0 grow-0 cursor-pointer select-none items-center gap-1 rounded-md border hover:bg-gray-100">
         <Emoji emoji={emoji} />
         <p className="text-center text-[1.2rem] text-gray-700">➜</p>
         <CustomEmoji src={emoji.customEmojiSrc} />
-        <Tag className="text-gray-400">
-          {emoji.provider === 'user' ? <User size={12} strokeWidth={2} /> : <Cloudy size={12} strokeWidth={2} />}
+        <Tag className="border-0 bg-gray-100 text-gray-400 outline-0">
+          {emoji.provider === 'user' ? <User size={10} strokeWidth={2} /> : <Cloudy size={10} strokeWidth={2} />}
         </Tag>
       </div>
     </EmojiEditor>
