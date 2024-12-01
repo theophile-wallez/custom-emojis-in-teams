@@ -14,7 +14,7 @@ export const EmojiFromTo = ({ emoji, onChange }: Props) => {
     <EmojiEditor emoji={emoji} onChange={onChange}>
       <div
         title={emoji.id}
-        className="relative flex h-10 w-[105px] shrink-0 grow-0 cursor-pointer select-none items-center gap-1 rounded-md border hover:bg-gray-100">
+        className="relative flex h-10 w-[111px] shrink-0 grow-0 cursor-pointer select-none items-center gap-1 rounded-md border hover:bg-gray-100">
         <Emoji emoji={emoji} />
         <p className="text-center text-[1.2rem] text-gray-700">➜</p>
         <CustomEmoji src={emoji.customEmojiSrc} />

@@ -8,6 +8,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input';
 import { customSrcSchema, type CustomEmojiSrc, type MixEmojiShape } from '@extension/emojis';
 import { userMappingStorage } from '@extension/storage/lib/impl/user.mapping.storage';
+import { toast } from 'sonner';
 
 type Props = PropsWithChildren<{
   emoji: MixEmojiShape;
@@ -26,15 +27,17 @@ export const EmojiEditor = ({ emoji, children, onChange }: Props) => {
   const onSubmit = (data: CustomEmojiSrc) => {
     if (!data.customEmojiSrc) return;
     userMappingStorage.addOrUpdateEmojiById(emoji.id, data.customEmojiSrc);
+    toast.success(`${emoji.alt} Successfully updated custom emoji`);
     onChange();
     setIsPopoverOpen(false);
   };
 
   const onDelete = async () => {
     await userMappingStorage.removeById(emoji.id);
-    onChange();
+    toast.success(`${emoji.alt} Successfully deleted custom emoji`);
     setIsPopoverOpen(false);
     form.reset();
+    onChange();
   };
 
   if (!emoji) return null;

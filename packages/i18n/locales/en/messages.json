@@ -4,27 +4,7 @@
     "message": "Chrome extension boilerplate developed with Vite, React and Typescript"
   },
   "extensionName": {
-    "description": "Better emojiss",
-    "message": "Better emojiss"
-  },
-  "toggleTheme": {
-    "message": "Toggle theme"
-  },
-  "loading": {
-    "message": "Loading..."
-  },
-  "greeting": {
-    "description": "Greeting message",
-    "message": "Hello, My name is $NAME$",
-    "placeholders": {
-      "name": {
-        "content": "$1",
-        "example": "John Doe"
-      }
-    }
-  },
-  "hello": {
-    "description": "Placeholder example",
-    "message": "Hello $1"
+    "message": "Custom emojis in Teams",
+    "description": "This extension allows you to add custom emojis to Teams by replacing default ones with you own. You can share with others your custom emojis by settings up a Github repository where the mapping is provided."
   }
 }

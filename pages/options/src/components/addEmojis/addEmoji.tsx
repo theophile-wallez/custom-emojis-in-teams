@@ -14,7 +14,7 @@ export const AddEmoji = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button className="w-[105px] gap-1">
+        <Button className="w-[111px] gap-1">
           <Plus strokeWidth={1.5} /> Add emoji
         </Button>
       </DialogTrigger>

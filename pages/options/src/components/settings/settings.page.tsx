@@ -6,20 +6,32 @@ import { SettingsForm } from './settings.form';
 import { FileDown, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { downloadMapping } from '@src/utils/downloadMapping';
+import { toast } from 'sonner';
 
 export const SettingsPage = () => {
   const settings = useStorage(settingsStorage);
-  const onChange = (value: SettingsData) => {
-    settingsStorage.set(value);
-    onSync();
+  const onChange = async (value: SettingsData) => {
+    await settingsStorage.set(value);
+    await onSync();
   };
 
   const onExport = async () => {
-    await downloadMapping();
+    toast.promise(downloadMapping(), {
+      loading: 'Exporting emojis...',
+      success: 'Emojis exported successfully!',
+      error: 'Error exporting emojis'
+    });
   };
 
   const onSync = async () => {
-    await fetchDataAndStoreIt(false);
+    await toast.promise(fetchDataAndStoreIt(false), {
+      loading: 'Syncing emojis...',
+      success: 'Emojis synced successfully!',
+      error: error => {
+        if (error instanceof Error) return error.message;
+        return 'Unknown error while syncing emojis';
+      }
+    });
   };
 
   return (
@@ -35,7 +47,7 @@ export const SettingsPage = () => {
               <RefreshCw /> Sync
             </Button>
             <Button variant="outline" onClick={onExport}>
-              <FileDown /> Export
+              <FileDown /> Export emojis
             </Button>
           </div>
         </div>

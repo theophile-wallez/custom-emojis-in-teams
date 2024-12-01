@@ -13,7 +13,11 @@ export const fetchEmojis = async (url: string, token?: string): Promise<CustomEm
       method: 'GET',
       headers: headers
     });
-
+    // if the response is not ok, check if it's a text error
+    if (!response.ok) {
+      const text = await response.text();
+      return new Error(`fetch error: ${text}`);
+    }
     const data: unknown = await response.json();
     const parsedData = customEmojisStoreSchema.safeParse(data);
 
