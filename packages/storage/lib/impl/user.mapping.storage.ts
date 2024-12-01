@@ -28,11 +28,9 @@ export const userMappingStorage = {
     }, {} as CustomEmojiMapWithProvider);
   },
   removeById: async (id: string) => {
-    console.log('removeById: ', id);
     return await newUserMappingStorage.set(currentData => {
       const newData = { ...currentData };
       delete newData[id as EmojiId];
-      console.log('newData: ', newData);
       return newData;
     });
   },

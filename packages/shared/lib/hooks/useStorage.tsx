@@ -7,12 +7,11 @@ const storageMap: Map<BaseStorage<any>, WrappedPromise> = new Map();
 
 export function useStorage<
   Storage extends BaseStorage<Data>,
-  Data = Storage extends BaseStorage<infer Data> ? Data : unknown,
+  Data = Storage extends BaseStorage<infer Data> ? Data : unknown
 >(storage: Storage) {
   const _data = useSyncExternalStore<Data | null>(storage.subscribe, storage.getSnapshot);
 
   if (!storageMap.has(storage)) {
-    console.log('no storage: ', storage);
     storageMap.set(storage, wrapPromise(storage.get()));
   }
   if (_data !== null) {
@@ -33,7 +32,7 @@ function wrapPromise<R>(promise: Promise<R>) {
     e => {
       status = 'error';
       result = e;
-    },
+    }
   );
 
   return {
@@ -46,6 +45,6 @@ function wrapPromise<R>(promise: Promise<R>) {
         default:
           return result;
       }
-    },
+    }
   };
 }
