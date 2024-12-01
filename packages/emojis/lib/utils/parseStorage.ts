@@ -1,7 +1,7 @@
-import { customEmojisSchema, type CustomEmojisMap } from '../schemas/customEmojis.storage.schema';
+import { customEmojisStoreSchema, type CustomEmojisStoreMap } from '../schemas/customEmojis.storage.schema';
 
-export const parseStorage = (storage: unknown): CustomEmojisMap => {
-  const response = customEmojisSchema.safeParse(storage);
+export const parseStorage = (storage: unknown): CustomEmojisStoreMap => {
+  const response = customEmojisStoreSchema.safeParse(storage);
   if (!response.success) {
     throw new Error('Invalid custom emojis storage');
   }

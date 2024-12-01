@@ -1,6 +1,6 @@
-import { customEmojisSchema, type CustomEmojisMap } from '../schemas/customEmojis.storage.schema';
+import { customEmojisStoreSchema, type CustomEmojisStoreMap } from '../schemas/customEmojis.storage.schema';
 
-export const fetchEmojis = async (url: string, token?: string): Promise<CustomEmojisMap | Error> => {
+export const fetchEmojis = async (url: string, token?: string): Promise<CustomEmojisStoreMap | Error> => {
   try {
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -14,7 +14,7 @@ export const fetchEmojis = async (url: string, token?: string): Promise<CustomEm
     });
 
     const data: unknown = await response.json();
-    const parsedData = customEmojisSchema.safeParse(data);
+    const parsedData = customEmojisStoreSchema.safeParse(data);
 
     return parsedData.data ?? parsedData.error;
   } catch (error: unknown) {

@@ -1,19 +1,23 @@
-import { useStorage } from '@extension/shared';
-import { externalMappingStorage } from '@extension/storage';
 import { EmojiFromTo } from '@/components/emojis/emojiFromTo';
-import type { EmojiId } from '@extension/emojis';
-import { EmojiDialog } from '@/components/emojiSelector/emojiDialog';
-import { EmojiEditor } from '@/components/editor/emoji.editor';
+import type { CustomEmojiShape } from '@extension/emojis';
+import { AddEmoji } from '@src/components/emojiSelector/addEmoji';
+import { useState } from 'react';
+import { useCustomEmojis } from '@src/hook/useCustomEmojis';
 
 export const Mapping = () => {
-  const emojiStorage = useStorage(externalMappingStorage);
+  const [currentEmojis, setCurrentEmojis] = useState<CustomEmojiShape[] | undefined>();
+  const allCustomEmojis = useCustomEmojis(currentEmojis);
+
+  if (!allCustomEmojis) return null;
+
+  const onChange = () => {
+    setCurrentEmojis(prev => JSON.parse(JSON.stringify(prev ?? {})));
+  };
   return (
-    <div className="flex w-full select-none flex-wrap gap-3">
-      <EmojiDialog />
-      {Object.entries(emojiStorage).map(([fromId, toSrc]) => (
-        <EmojiEditor key={fromId} emoji={{ id: fromId, src: toSrc }} onChange={() => {}}>
-          <EmojiFromTo fromId={fromId as EmojiId} toSrc={toSrc} />
-        </EmojiEditor>
+    <div className="flex w-full flex-wrap gap-3">
+      <AddEmoji />
+      {allCustomEmojis.map(emoji => (
+        <EmojiFromTo key={emoji.id} emoji={emoji} onChange={onChange} />
       ))}
     </div>
   );

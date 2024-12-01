@@ -1,36 +1,36 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, type PropsWithChildren } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { customEmojiShapeSchema } from '@extension/emojis';
 import { Input } from '@/components/ui/input';
-import type { EmojiId, EmojiShapeWithCustomSrc } from '@extension/emojis';
+import { customSrcSchema, type CustomEmojiSrc, type MixEmojiShape } from '@extension/emojis';
 import { userMappingStorage } from '@extension/storage/lib/impl/user.mapping.storage';
 
 type Props = PropsWithChildren<{
-  emoji: EmojiShapeWithCustomSrc;
+  emoji: MixEmojiShape;
   onChange: () => void;
 }>;
 
 export const EmojiEditor = ({ emoji, children, onChange }: Props) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const form = useForm<EmojiShapeWithCustomSrc>({
-    resolver: zodResolver(customEmojiShapeSchema),
-    values: emoji,
+  const form = useForm<CustomEmojiSrc>({
+    resolver: zodResolver(customSrcSchema),
+    values: {
+      customEmojiSrc: emoji.customEmojiSrc ?? ''
+    }
   });
 
-  const onSubmit = (data: EmojiShapeWithCustomSrc) => {
-    console.log('onSubmit: ', data);
+  const onSubmit = (data: CustomEmojiSrc) => {
     if (!data.customEmojiSrc) return;
-    userMappingStorage.addOrUpdateEmojiById(data.id, data.customEmojiSrc);
+    userMappingStorage.addOrUpdateEmojiById(emoji.id, data.customEmojiSrc);
     onChange();
     setIsPopoverOpen(false);
   };
 
   const onDelete = async () => {
-    console.log('delete');
     await userMappingStorage.removeById(emoji.id);
     onChange();
     setIsPopoverOpen(false);
@@ -44,8 +44,11 @@ export const EmojiEditor = ({ emoji, children, onChange }: Props) => {
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent className="w-80">
         <div className="flex flex-col gap-4">
-          <div className=" flex w-full space-y-2">
+          <div className=" flex w-full items-center gap-4">
             <h1 className="text-[1.5rem] font-medium leading-none">{emoji.alt}</h1>
+            <p className="text-muted-foreground text-sm">
+              {emoji.provider === 'user' ? 'Set by you' : 'Set by external source'}
+            </p>
           </div>
           <div className="w-full">
             <Form {...form}>
@@ -65,8 +68,8 @@ export const EmojiEditor = ({ emoji, children, onChange }: Props) => {
                   )}
                 />
                 <div className="flex justify-between">
-                  <Button type="submit">Add</Button>
-                  {emoji.customEmojiSrc && (
+                  <Button type="submit">Submit</Button>
+                  {emoji.customEmojiSrc && emoji.provider === 'user' && (
                     <Button type="reset" onClick={onDelete} variant="destructive">
                       Delete
                     </Button>

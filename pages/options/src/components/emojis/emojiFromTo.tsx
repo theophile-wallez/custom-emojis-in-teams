@@ -1,17 +1,20 @@
-import type { EmojiId } from '@extension/emojis';
+import type { CustomEmojiShape } from '@extension/emojis';
 import { Emoji } from '@/components/emojis/emoji';
 import { CustomEmoji } from './customEmoji';
+import { EmojiEditor } from '../editor/emoji.editor';
 
 type Props = {
-  fromId: EmojiId;
-  toSrc: string;
+  emoji: CustomEmojiShape;
+  onChange: () => void;
 };
-export const EmojiFromTo = ({ fromId, toSrc }: Props) => {
+export const EmojiFromTo = ({ emoji, onChange }: Props) => {
   return (
-    <div className="flex h-10 w-[105px] shrink-0 grow-0 items-center gap-1 rounded-md border">
-      <Emoji id={fromId} />
-      <p className="text-center text-[1.2rem] text-gray-700">➜</p>
-      <CustomEmoji src={toSrc} />
-    </div>
+    <EmojiEditor emoji={emoji} onChange={onChange}>
+      <div className="flex h-10 w-[105px] shrink-0 grow-0 items-center gap-1 rounded-md border">
+        <Emoji emoji={emoji} />
+        <p className="text-center text-[1.2rem] text-gray-700">➜</p>
+        <CustomEmoji src={emoji.customEmojiSrc} />
+      </div>
+    </EmojiEditor>
   );
 };

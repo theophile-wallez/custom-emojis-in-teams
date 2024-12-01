@@ -1,11 +1,11 @@
 import { useEmojis } from '@/hook/useEmojis';
 import { EmojiEditor } from '@/components/editor/emoji.editor';
 import { CustomEmoji } from '../emojis/customEmoji';
-import type { EmojiShapeWithCustomSrc } from '@extension/emojis';
+import type { MixEmojiShape } from '@extension/emojis';
 import { useState } from 'react';
 
 export const EmojiSelector = () => {
-  const [currentEmojis, setCurrentEmojis] = useState<EmojiShapeWithCustomSrc[] | undefined>();
+  const [currentEmojis, setCurrentEmojis] = useState<MixEmojiShape[] | undefined>();
   const allEmojis = useEmojis(currentEmojis);
 
   if (!allEmojis) return null;

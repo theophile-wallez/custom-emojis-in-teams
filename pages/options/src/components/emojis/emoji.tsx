@@ -1,12 +1,10 @@
-import type { EmojiId } from '@extension/emojis';
-import { useEmoji } from '@/hook/useEmoji';
+import type { MixEmojiShape } from '@extension/emojis';
 import { EmojiContainer } from './emoji.container';
 
 type Props = {
-  id: EmojiId;
+  emoji: MixEmojiShape;
 };
-export const Emoji = ({ id }: Props) => {
-  const emoji = useEmoji(id);
+export const Emoji = ({ emoji }: Props) => {
   return (
     <EmojiContainer>
       <p className="text-center text-[1.4rem]">{emoji?.alt}</p>

@@ -4,15 +4,15 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/ui/dialog';
 import { Plus } from 'lucide-react';
 import { Button } from '../ui/button';
 import { EmojiSelector } from './emojiSelector';
 
-export const EmojiDialog = () => {
+export const AddEmoji = () => {
   return (
-    <Dialog open={true}>
+    <Dialog>
       <DialogTrigger>
         <Button className="w-[105px] gap-1">
           <Plus strokeWidth={1.5} /> Add emoji
