@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { settingsSchema, type SettingsData } from '@extension/storage';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Separator } from '@/components/ui/separator';
 
 type Props = {
   settings: SettingsData;
@@ -16,7 +15,7 @@ type Props = {
 export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
   const form = useForm({
     resolver: zodResolver(settingsSchema),
-    values: settings,
+    values: settings
   });
 
   return (
@@ -95,7 +94,7 @@ export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
                     <a className="underline hover:text-black" href="https://github.com/settings/tokens?type=beta">
                       Personal Access Token
                     </a>{' '}
-                    with read access permission.
+                    with read access to code and metadata.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

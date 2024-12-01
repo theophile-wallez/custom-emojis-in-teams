@@ -6,8 +6,8 @@ export const isAlarmDefined = async (): Promise<boolean> => {
 };
 
 export const createNewAlarm = async (): Promise<void> => {
-  console.log('Creating new alarm');
+  console.log('Creating new alarm', ALARM_NAME, UPDATE_TIME_DELTA);
   return chrome.alarms.create(ALARM_NAME, {
-    periodInMinutes: UPDATE_TIME_DELTA,
+    periodInMinutes: UPDATE_TIME_DELTA
   });
 };

@@ -1,24 +1,25 @@
-import { toggleTheme } from '@src/toggleTheme';
-import { getCustomEmojisStorage } from '@src/getCustomEmojisStorage';
-import { findEmojis } from './findEmojis';
+import { findAndReplaceEmojis } from './findEmojis';
+import { getMappingStorage } from '@extension/storage';
 
-console.log('content script loaded');
+console.log('Custom emojisloaded');
 
-// Function to count divs and observe DOM changes
 async function initObserver(emojisMap: Record<string, string>) {
   const bodyObserver = new MutationObserver(() => {
-    findEmojis(emojisMap);
+    findAndReplaceEmojis(emojisMap);
   });
 
-  // Start observing the document with configured parameters
   bodyObserver.observe(document.body, {
     childList: true,
-    subtree: true,
+    subtree: true
   });
 }
-getCustomEmojisStorage().then(res => {
-  console.log('res: ', res);
-  void initObserver(res);
+
+getMappingStorage().then(response => {
+  void initObserver(response);
 });
 
-void toggleTheme();
+// TODO: Remove
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  console.log('changes: ', changes);
+  console.log('namespace: ', namespace);
+});
