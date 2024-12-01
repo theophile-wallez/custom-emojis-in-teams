@@ -13,7 +13,9 @@ export const useCustomEmojis = (changedData: CustomEmojiShape[] | undefined): Cu
         customEmojiSrc: emoji.src,
         provider: emoji.provider
       }));
-      setCustomEmojis(richEmojis);
+
+      const sorted = richEmojis.sort((a, b) => b.provider.localeCompare(a.provider));
+      setCustomEmojis(sorted);
     };
     void getCustomEmojis();
   }, [changedData]);

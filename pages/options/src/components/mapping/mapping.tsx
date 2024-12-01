@@ -1,6 +1,6 @@
 import { EmojiFromTo } from '@/components/emojis/emojiFromTo';
 import type { CustomEmojiShape } from '@extension/emojis';
-import { AddEmoji } from '@src/components/emojiSelector/addEmoji';
+import { AddEmoji } from '@src/components/addEmojis/addEmoji';
 import { useState } from 'react';
 import { useCustomEmojis } from '@src/hook/useCustomEmojis';
 

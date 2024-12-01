@@ -3,6 +3,7 @@ import { EmojiEditor } from '@/components/editor/emoji.editor';
 import { CustomEmoji } from '../emojis/customEmoji';
 import type { MixEmojiShape } from '@extension/emojis';
 import { useState } from 'react';
+import { Tag } from '../ui/tag';
 
 export const EmojiSelector = () => {
   const [currentEmojis, setCurrentEmojis] = useState<MixEmojiShape[] | undefined>();
@@ -24,10 +25,8 @@ export const EmojiSelector = () => {
             title={emoji.id}>
             {emoji.customEmojiSrc ? (
               <>
-                <CustomEmoji src={emoji.customEmojiSrc} />{' '}
-                <span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full border bg-white text-[0.5rem] outline outline-2 outline-white">
-                  {emoji.alt ?? 'x'}
-                </span>
+                <CustomEmoji src={emoji.customEmojiSrc} />
+                <Tag>{emoji.alt ?? 'x'}</Tag>
               </>
             ) : (
               (emoji.alt ?? 'x')

@@ -46,9 +46,11 @@ export const EmojiEditor = ({ emoji, children, onChange }: Props) => {
         <div className="flex flex-col gap-4">
           <div className=" flex w-full items-center gap-4">
             <h1 className="text-[1.5rem] font-medium leading-none">{emoji.alt}</h1>
-            <p className="text-muted-foreground text-sm">
-              {emoji.provider === 'user' ? 'Set by you' : 'Set by external source'}
-            </p>
+            {emoji.provider && (
+              <p className="text-muted-foreground text-sm">
+                {emoji.provider === 'user' ? 'Set by you' : 'Set by external source'}
+              </p>
+            )}
           </div>
           <div className="w-full">
             <Form {...form}>
