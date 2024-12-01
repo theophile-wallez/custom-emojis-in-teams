@@ -7,8 +7,6 @@ export const findAndReplaceEmojis = (emojisMap: Record<string, string> = {}) => 
   );
 
   if (!emojiElements?.length) return;
-  console.log('emojiElements: ', emojiElements);
-  console.log('validEmojis: ', validEmojis);
 
   emojiElements.forEach(emoji => {
     replaceEmoji(emojisMap, emoji);

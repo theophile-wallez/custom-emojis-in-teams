@@ -8,7 +8,7 @@ export const fetchDataAndStoreIt = async (shouldUpdateLastUpdate: boolean = true
 
   if (response instanceof Error) {
     console.error('Error fetching emojis: ', response.message);
-    throw response; // TODO: Store and display error
+    throw response;
   }
 
   if (shouldUpdateLastUpdate) {
