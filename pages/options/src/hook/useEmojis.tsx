@@ -1,12 +1,26 @@
-import type { EmojiShape } from '@extension/emojis';
+import type { EmojiShapeWithCustomSrc } from '@extension/emojis';
 import { allEmojis } from '@extension/emojis';
-import { useStorage } from '@extension/shared';
-import { externalMappingStorage } from '@extension/storage';
+import { getFullMappingStorage } from '@extension/storage';
+import { useEffect, useState } from 'react';
 
-export const useEmojis = (): (EmojiShape & { customEmojiSrc?: string })[] => {
-  const customEmojiMap = useStorage(externalMappingStorage);
-  return allEmojis.map(emoji => ({
-    ...emoji,
-    customEmojiSrc: customEmojiMap[emoji.id],
-  }));
+export const useEmojis = (
+  changedData: EmojiShapeWithCustomSrc[] | undefined,
+): EmojiShapeWithCustomSrc[] | undefined => {
+  const [emojis, setEmojis] = useState<EmojiShapeWithCustomSrc[] | undefined>(undefined);
+
+  useEffect(() => {
+    const fetchEmojis = async () => {
+      const fullMapping = await getFullMappingStorage();
+      console.log('fullMapping: ', fullMapping);
+      setEmojis(
+        allEmojis.map(emoji => ({
+          ...emoji,
+          customEmojiSrc: fullMapping[emoji.id],
+        })),
+      );
+    };
+    void fetchEmojis();
+  }, [changedData]);
+
+  return emojis;
 };

@@ -11,7 +11,7 @@ export const Mapping = () => {
     <div className="flex w-full select-none flex-wrap gap-3">
       <EmojiDialog />
       {Object.entries(emojiStorage).map(([fromId, toSrc]) => (
-        <EmojiEditor key={fromId} value={fromId} canDelete={true}>
+        <EmojiEditor key={fromId} emoji={{ id: fromId, src: toSrc }} onChange={() => {}}>
           <EmojiFromTo fromId={fromId as EmojiId} toSrc={toSrc} />
         </EmojiEditor>
       ))}
