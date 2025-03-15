@@ -21,36 +21,11 @@ export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSettingsChange)} className="space-y-8">
-        {/* <FormField
-          control={form.control}
-          name="mergeMode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Merge mode</FormLabel>
-              <FormControl>
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    id="merge-mode"
-                    checked={field.value === 'manualFirst'}
-                    onCheckedChange={v => field.onChange(v ? 'manualFirst' : 'sourceFirst')}
-                  />
-                  <Label htmlFor="merge-mode">Manual mapping first</Label>
-                </div>
-              </FormControl>
-              <FormDescription>
-                If enabled, the extension will prioritize manual mappings over the synchronized source.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Separator /> */}
         <FormField
           control={form.control}
           name="isSync"
           render={({ field }) => (
             <FormItem>
-              {/* <FormLabel>Synchronize with an external source</FormLabel> */}
               <FormControl>
                 <div className="flex items-center space-x-2">
                   <Switch id="is-sync" checked={field.value} onCheckedChange={field.onChange} />
@@ -115,6 +90,42 @@ export const SettingsForm = ({ settings, onSettingsChange }: Props) => {
               )}
             />
           </>
+        )}
+        <FormField
+          control={form.control}
+          name="canCrypt"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div className="flex items-center space-x-2">
+                  <Switch id="can-crypt" checked={field.value} onCheckedChange={field.onChange} />
+                  <Label htmlFor="can-crypt">Enable crypted message</Label>
+                </div>
+              </FormControl>
+
+              <FormDescription>
+                If enabled, the extension will encrypt the message before sending it to the server.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {form.getValues('canCrypt') === true && (
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input placeholder="My secret password" {...field} type="password" />
+                </FormControl>
+                <FormDescription>Use the same password to encrypt and decrypt the message.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         )}
 
         <Button type="submit">Submit</Button>

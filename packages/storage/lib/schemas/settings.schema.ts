@@ -13,24 +13,45 @@ export const syncOptionsSchema = z.object({
   /** Optional authentication token for accessing the source (e.g., Github PAT) */
   token: z.string().optional(),
   /** Last error message */
-  lastErrorMessage: z.string().optional(),
+  lastErrorMessage: z.string().optional()
 });
 
 /** Schema for manual settings configuration where sync is disabled */
-export const manualSettingsSchema = z
+const manualEmojiSettingsSchema = z
   .object({
     /** Indicates that synchronization is disabled */
-    isSync: z.literal(false),
+    isSync: z.literal(false)
   })
   .merge(syncOptionsSchema.partial());
 
 /** Schema for sync settings configuration where sync is enabled */
-export const syncSettingsSchema = z
+const syncEmojiSettingsSchema = z
   .object({
     /** Indicates that synchronization is enabled */
-    isSync: z.literal(true),
+    isSync: z.literal(true)
   })
   .merge(syncOptionsSchema);
 
+const cryptedMessageSettingsSchema = z.object({
+  /** Indicates that crypted message is enabled */
+  password: z.string().min(8)
+});
+
+const cryptedMessageDisabledSchema = z
+  .object({
+    /** Indicates that crypted message is disabled */
+    canCrypt: z.literal(false)
+  })
+  .merge(cryptedMessageSettingsSchema.partial());
+
+const cryptedMessageEnabledSchema = z
+  .object({
+    /** Indicates that crypted message is enabled */
+    canCrypt: z.literal(true)
+  })
+  .merge(cryptedMessageSettingsSchema);
+
 /** Combined schema that validates either manual or sync settings */
-export const settingsSchema = z.union([syncSettingsSchema, manualSettingsSchema]);
+export const settingsSchema = z
+  .union([syncEmojiSettingsSchema, manualEmojiSettingsSchema])
+  .and(z.union([cryptedMessageDisabledSchema, cryptedMessageEnabledSchema]));

@@ -8,5 +8,7 @@ export const DEFAULT_SETTINGS: SettingsData = {
   lastUpdate: Date.now(),
   updateTimeDelta: DEFAULT_UPDATE_TIME_DELTA,
   lastErrorMessage: undefined,
-  sourceUrl: ''
+  sourceUrl: '',
+  canCrypt: false,
+  password: undefined
 } as const satisfies SettingsData;
