@@ -19,7 +19,7 @@ const manifest = {
   version: packageJson.version,
   description: '__MSG_extensionDescription__',
   host_permissions: ['<all_urls>'],
-  permissions: ['storage', 'https://teams.microsoft.com/v2/*', 'alarms'],
+  permissions: ['storage', 'https://teams.microsoft.com/v2/*', 'alarms', 'tabs', 'activeTab', 'scripting'],
   options_page: 'options/index.html',
   background: {
     service_worker: 'background.iife.js',
