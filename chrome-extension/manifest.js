@@ -19,7 +19,7 @@ const manifest = {
   version: packageJson.version,
   description: '__MSG_extensionDescription__',
   host_permissions: ['<all_urls>'],
-  permissions: ['storage', 'https://teams.microsoft.com/v2/*', 'alarms', 'tabs', 'activeTab', 'scripting'],
+  permissions: ['storage', 'alarms', 'tabs', 'activeTab', 'scripting'],
   options_page: 'options/index.html',
   background: {
     service_worker: 'background.iife.js',
@@ -31,7 +31,12 @@ const manifest = {
   content_scripts: [
     {
       matches: ['https://teams.microsoft.com/v2/*'],
-      js: ['content/index.iife.js']
+      js: ['content/index.iife.js'],
+      css: ['content.css']
+    },
+    {
+      matches: ['https://teams.microsoft.com/v2/*'],
+      css: ['content.css']
     }
   ],
   // devtools_page: 'devtools/index.html',
