@@ -6,22 +6,30 @@ let retry = 0;
 const selector = '[id^=content-]';
 
 export const processText = async (el: HTMLElement) => {
-  const text = el.querySelectorAll(selector);
+  const messageElements = el.querySelectorAll(selector);
 
-  text.forEach(async t => {
-    const text = t.textContent;
-    if (!text?.includes(ENCRYPTED_DELIMITER)) return;
+  messageElements.forEach(async messageElement => {
+    // Check if element has _crypt_ tags
+    const html = messageElement.innerHTML;
+    if (!html.includes('_crypt_')) return;
 
-    const data = text.split(ENCRYPTED_DELIMITER)[1];
-    if (!data) return;
+    // Use regex to find all encrypted text between _crypt_ tags
+    const regex = /_crypt_(.*?)_crypt_/g;
+    let newHtml = html;
 
-    try {
-      const clearMessage = await decryptText(data);
-      t.innerHTML = `<p style="font-style: italic;">${clearMessage}</p>`;
-    } catch (error: unknown) {
-      console.error(error);
-      t.innerHTML = `<p style="color: red;">error decrypting message</p>`;
+    // Replace each encrypted text while preserving other elements
+    const matches = html.match(regex);
+    if (!matches) return;
+    for (const match of matches) {
+      const encryptedText = match.replace(/_crypt_/g, '');
+      const clearMessage = await decryptText(encryptedText);
+
+      const decryptedText = `<i title="Encrypted message: ${encryptedText}">${clearMessage}</i>`;
+      newHtml = newHtml.replace(match, decryptedText);
+      messageElement.id = 'decrypted-message';
     }
+
+    messageElement.innerHTML = newHtml;
   });
 };
 
