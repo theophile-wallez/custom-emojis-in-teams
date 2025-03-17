@@ -1,15 +1,10 @@
 .crypted-input {
   width: -webkit-fill-available;
   margin: 0 72px;
-  margin-top: 1rem;
-  height: 44px;
+  height: 30px;
   border: 1px solid var(--colorNeutralStroke2);
   background-color: var(--colorNeutralBackground1);
   color: var(--colorNeutralForeground1);
-  border-radius: 6px;
+  border-radius: 10px;
   padding: 6px;
-  padding-inline: 15px;
-  &::placeholder {
-    color: var(--colorNeutralForeground3);
-  }
 }

@@ -1,3 +1,4 @@
+import { initMessageObserver, replaceInputBar } from './encryption';
 import { findAndReplaceEmojis } from './findEmojis';
 import { getMappingStorage } from '@extension/storage';
 
@@ -16,4 +17,9 @@ async function initObserver(emojisMap: Record<string, string>) {
 
 getMappingStorage().then(response => {
   void initObserver(response);
+  setTimeout(() => {
+    void initMessageObserver();
+  }, 5000);
 });
+
+replaceInputBar();
