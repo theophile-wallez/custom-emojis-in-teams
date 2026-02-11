@@ -1,4 +1,4 @@
-mport fs from 'node:fs';
+import fs from 'node:fs';
 
 const packageJson = JSON.parse(fs.readFileSync('../package.json', 'utf8'));
 
