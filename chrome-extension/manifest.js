@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+mport fs from 'node:fs';
 
 const packageJson = JSON.parse(fs.readFileSync('../package.json', 'utf8'));
 
@@ -19,7 +19,7 @@ const manifest = {
   version: packageJson.version,
   description: '__MSG_extensionDescription__',
   host_permissions: ['<all_urls>'],
-  permissions: ['storage', 'https://teams.microsoft.com/v2/*', 'alarms'],
+  permissions: ['storage', 'https://teams.microsoft.com/v2/*', 'https://teams.cloud.microsoft/*','alarms'],
   options_page: 'options/index.html',
   background: {
     service_worker: 'background.iife.js',
@@ -31,6 +31,10 @@ const manifest = {
   content_scripts: [
     {
       matches: ['https://teams.microsoft.com/v2/*'],
+      js: ['content/index.iife.js']
+    },
+    {
+      matches: ['https://teams.cloud.microsoft/*'],
       js: ['content/index.iife.js']
     }
   ],
